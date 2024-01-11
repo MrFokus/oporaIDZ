@@ -4,17 +4,17 @@ const props = defineProps<{
 }>()
 const days = ref([])
 const listMonth = ['Января','Февраля','Марта','Апреля','Мая','Июня','Июля','Августа','Сентября','Октября','Ноября','Декабря']
+const Months = ['Январь','Февраль','Март','Апрель','Май','Июнь','Июль','Август','Сентябрь','Октябрь','Ноябрь','Декабрь']
+
+const month =ref(new Date().getMonth())
+const year = ref(new Date().getFullYear())
 function calcDays(){
-  let month = new Date().getMonth()
-  let year = new Date().getFullYear()
-  console.log(year)
-  let day = new Date(year, month, 1).getDay()
-  console.log(day)
+  let day = new Date(year.value, month.value, 1).getDay()
   day = -day+2
   for (let i = 0; i < 5; i++) {
     days.value.push([])
     for (let j = 0; j < 7; j++) {
-      days.value[i].push({date:new Date(year,month,day),events:[]})
+      days.value[i].push({date:new Date(year.value,month.value,day),events:[]})
       day++
     }
   }
@@ -25,9 +25,19 @@ function searchEvent(date:Date){
   return props?.events?.filter(e=>new Date(e.date).getTime()===date.getTime())
 }
 calcDays()
+function slideDate(val:number){
+  month.value+=val
+  days.value = []
+  calcDays()
+}
 </script>
 
 <template>
+  <nav style="margin-bottom: 20px; display: flex; align-items: center;justify-content: center;gap: 10px; width: fit-content"><button @click="slideDate(-1)"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22" fill="none">
+    <path d="M6.875 11L13.75 4.125L14.7125 5.0875L8.8 11L14.7125 16.9125L13.75 17.875L6.875 11Z" fill="#909CA2"/>
+  </svg></button><span style="padding-bottom: 2px; font-size: 16px; font-weight: 500">{{Months[new Date(year, month, 1).getMonth()]}} {{new Date(year, month, 1).getFullYear()}}</span><button @click="slideDate(1)"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22" fill="none">
+    <path d="M15.1251 11L8.2501 17.875L7.2876 16.9125L13.2001 11L7.2876 5.0875L8.2501 4.125L15.1251 11Z" fill="#909CA2"/>
+  </svg></button></nav>
 <table>
   <thead>
     <tr>
