@@ -4,7 +4,7 @@ import Select from "~/components/UI/Select.vue";
 const userList = ref([])
 const user = useCookie('user')
 onMounted(() => {
-  userList.value = JSON.parse(localStorage.getItem('user-list'))
+  toDefault()
 })
 const search = ref({
   type: '',
@@ -13,16 +13,19 @@ const search = ref({
 })
 
 function searchUser() {
-  userList.value.filter(user => {
+  userList.value = userList.value.filter(user => {
 
-    if ((user.data.organization === search.value.INN || `${user.data.lastName} ${user.data.firstName} ${user.data.patronymic}` == search.value.INN) && user.data.type === search.value.type && user.data.INN === search.value.INN)
+    if ((user.data.organization === search.value.name || `${user.data.lastName} ${user.data.firstName} ${user.data.patronymic}` == search.value.name) && user.type === search.value.type && user.data.INN === search.value.INN)
     {
-      console.log('sfvscvscv')
       return user
     }
 
   })
   console.log(userList.value)
+}
+
+function toDefault(){
+  userList.value = JSON.parse(localStorage.getItem('user-list'))
 
 }
 
@@ -68,7 +71,7 @@ function searchUser() {
           <hr>
           <div class="btn-container">
             <button @click="searchUser" class="search-btn blue">Поиск</button>
-            <button class="default white">Сброс</button>
+            <button @click="toDefault" class="default white">Сброс</button>
           </div>
         </div>
         <nav style="display: flex;flex-direction: column; gap: 15px; align-items: flex-start">
@@ -76,7 +79,7 @@ function searchUser() {
             Добавить клиента
           </nuxt-link>
           <nuxt-link to="/create-event" style="color: #2962FF">
-            + Создать мероприятие
+            Создать мероприятие
           </nuxt-link>
         </nav>
       </div>
