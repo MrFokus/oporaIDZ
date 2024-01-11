@@ -67,6 +67,7 @@ main{
     max-width: _rem(1232);
     margin: 0 auto;
     min-width: auto;
+    padding-bottom: _rem(30);
 }
 aside{
   position: sticky;

@@ -48,27 +48,37 @@ function searchUser() {
       </div>
     </header>
     <div class="content">
-      <div class="search">
-        <div class="inputs">
-          <div class="params-select type">
-            <p>Категория</p>
-            <Select v-model="search.type" placeholder="Выберите категорию"
-                    :list-select="['ИП','Физическое лицо','Организация']"></Select>
+      <div style="justify-content: space-between">
+        <div class="search">
+          <div class="inputs">
+            <div class="params-select type">
+              <p>Категория</p>
+              <Select v-model="search.type" placeholder="Выберите категорию"
+                      :list-select="['ИП','Физическое лицо','Организация']"></Select>
+            </div>
+            <div class="params-select">
+              <p>ФИО/Компания</p>
+              <input v-model="search.name" placeholder="Ваше имя"/>
+            </div>
+            <div class="params-select">
+              <p>ИНН*</p>
+              <input v-model="search.INN" placeholder="__ __ ______ __">
+            </div>
           </div>
-          <div class="params-select">
-            <p>ФИО/Компания</p>
-            <input v-model="search.name" placeholder="Ваше имя"/>
-          </div>
-          <div class="params-select">
-            <p>ИНН*</p>
-            <input v-model="search.INN" placeholder="__ __ ______ __">
+          <hr>
+          <div class="btn-container">
+            <button @click="searchUser" class="search-btn blue">Поиск</button>
+            <button class="default white">Сброс</button>
           </div>
         </div>
-        <hr>
-        <div class="btn-container">
-          <button @click="searchUser" class="search-btn blue">Поиск</button>
-          <button class="default white">Сброс</button>
-        </div>
+        <nav style="display: flex;flex-direction: column; gap: 15px; align-items: flex-start">
+          <nuxt-link to="/register" style="color: #2962FF">
+            Добавить клиента
+          </nuxt-link>
+          <nuxt-link to="/create-event" style="color: #2962FF">
+            + Создать мероприятие
+          </nuxt-link>
+        </nav>
       </div>
       <table>
         <thead>

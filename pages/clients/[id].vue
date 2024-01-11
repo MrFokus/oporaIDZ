@@ -19,6 +19,11 @@ function findUsr(id: number) {
     return {...registerList.value.find(usr => usr.data.id === id), location: 'register-list'}
   } else return false
 }
+function getRandomInt() {
+  let min = Math.ceil(1);
+  let max = Math.floor(99999999);
+  return Math.floor(Math.random() * (max - min) + min); // The maximum is exclusive and the minimum is inclusive
+}
 
 function successUser() {
   let copyLR = JSON.parse(localStorage.getItem('list-register'))
@@ -31,7 +36,7 @@ function successUser() {
   }).indexOf(user.value.data.id)
   console.log(index)
   if (index !== -1) {
-    copyUL.push({...copyLR[index], about: ''})
+    copyUL.push({...copyLR[index], about: '',codeActivate:getRandomInt()})
     copyLR.splice(index, 1)
     localStorage.setItem('user-list', JSON.stringify(copyUL))
     localStorage.setItem('list-register', JSON.stringify(copyLR))
@@ -74,7 +79,7 @@ function successUser() {
           </button>
         </div>
         <p v-else class="code-activation">
-          Код активации: {{ user?.codeActivation }}
+          Код активации: {{ user?.codeActivate }}
         </p>
       </div>
       <div class="user">
